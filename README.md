@@ -52,3 +52,7 @@ This project focuses on real-world engineering challenges:
 - Transforming messy data into structured outputs
 
 It’s not just a script—it’s a small data processing pipeline.
+
+## 📚 Documentation
+
+- [Developer Guide](docs/DEVELOPER_GUIDE.md)
