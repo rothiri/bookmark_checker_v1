@@ -1,0 +1,37 @@
+# Paths
+bookmarks_html: "F:/Dropbox/Tools/bookmarks_1_15_26.html"
+output_csv: "F:/Dropbox/Tools/bookmark_link_check_results.csv"
+
+# Performance
+workers: 15
+per_domain_delay: 1.0
+timeout_connect: 4
+timeout_read: 10
+
+# Behavior
+dedupe_mode: aggressive
+enable_soft_404: false
+enable_fingerprinting: false
+
+# Domains to skip
+ignore_domains:
+  - deviantart.com
+  - pinterest.com
+  - medium.com
+
+# Output
+generate_valid_html: true
+generate_grouped_html: true
+generate_report: true
+
+retries:
+  enabled: true
+  max_attempts: 3
+  base_delay: 2.0        # seconds
+  backoff_multiplier: 2.0
+  jitter: 0.5            # +/- random seconds
+
+retry_count: 2
+retried: yes
+retry_history: connect_timeout → read_timeout → ok
+

@@ -1,0 +1,116 @@
+# 📘 Bookmark Link Checker
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Status](https://img.shields.io/badge/status-active-success)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Concurrency](https://img.shields.io/badge/concurrency-multithreaded-orange)
+![Resilience](https://img.shields.io/badge/retry-backoff%20%2B%20jitter-blueviolet)
+
+A Python tool for analyzing, cleaning, and validating large Chrome bookmark collections.
+
+It parses exported bookmarks, removes duplicates, checks links in parallel with retry and politeness controls,
+and generates clean, importable outputs—including one that preserves your original folder structure without
+broken links.
+
+---
+
+## 🚀 What this solves
+
+If you’ve ever had thousands of bookmarks, you already know:
+
+- Some are dead 💀
+- Some redirect somewhere unexpected
+- Some are duplicates
+- And finding anything useful becomes painful
+
+This tool turns that chaos into something usable again.
+
+---
+
+## ⚡ Quick Example
+
+```bash
+python -m bookmark_checker.main \
+  --bookmarks bookmarks.html \
+  --out results.csv \
+  --workers 10 \
+  --dedupe-mode aggressive
+
+
+## 🏗 Architecture Overview
+
+```mermaid
+
+
+
+bookmark_checker/
+│
+├── main.py                     # Orchestration + pipeline
+│
+├── models.py                   # Bookmark, CheckResult
+├── parse_bookmarks.py          # HTML parsing
+├── dedupe.py                   # Deduplication logic
+├── normalize.py                # URL normalization
+│
+├── checks/
+│   ├── http_check.py           # Single request logic (no retries)
+│   ├── retry.py                # Retry + backoff wrapper
+│   └── politeness.py           # Per-domain throttling
+│
+├── writers/
+│   └── folder_preserving.py    # Rebuilds original folder structure
+│
+├── utils/
+│   ├── dates.py
+│   ├── logging.py
+│   └── paths.py
+│
+└── config.py                   # Defaults + config loading
+
+
+Some Features
+🔍 Bookmark Processing
+    Parses Chrome bookmark HTML exports
+    Supports nested folder structures
+    Preserves metadata like title and add date
+
+🧹 Deduplication
+Multiple modes:
+    strict
+    basic
+    tracking_free
+    aggressive
+    Normalizes URLs before comparison
+    Removes duplicates safely
+
+⚡ Parallel Link Checking
+    Multi-threaded (ThreadPoolExecutor)
+    Per-thread HTTP sessions (connection reuse)
+    Configurable worker count
+⏳ Politeness Controls
+    Per-domain delay to avoid hammering servers
+    Shared throttling across threads
+🔁 Retry & Backoff
+    Automatic retry for transient failures
+    Exponential backoff + jitter
+    Clean separation between:
+    "check once" logic
+    retry wrapper
+🧠 Smart Failure Detection
+    Detects:
+        HTTP errors
+        soft 404s
+        potential login walls
+        content-based failures
+
+📤 Outputs
+
+After processing, the tool generates:
+
+📄 CSV (Full Results)
+
+Detailed record of every checked URL:
+    status
+    final URL
+    error type
+    retry history
