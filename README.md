@@ -41,3 +41,14 @@ python -m bookmark_checker.main \
 - Domain-level rate limiting (politeness)
 - Modular architecture with clear separation of concerns
 - Multiple output pipelines from a single validation pass
+
+## 🧠 Why this project is interesting
+
+This project focuses on real-world engineering challenges:
+
+- Handling unreliable external systems (websites)
+- Balancing concurrency with politeness constraints
+- Designing retryable, resilient workflows
+- Transforming messy data into structured outputs
+
+It’s not just a script—it’s a small data processing pipeline.
