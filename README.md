@@ -33,3 +33,11 @@ python -m bookmark_checker.main \
   --out results.csv \
   --workers 10 \
   --dedupe-mode aggressive
+
+## 💼 Engineering Highlights
+
+- Multi-threaded processing with controlled concurrency
+- Retry/backoff strategy with jitter
+- Domain-level rate limiting (politeness)
+- Modular architecture with clear separation of concerns
+- Multiple output pipelines from a single validation pass
